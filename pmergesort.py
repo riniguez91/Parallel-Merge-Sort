@@ -48,8 +48,9 @@ def mergeSortParallel(array_to_sort):
 
     # Al terminar, tenemos todos los chunks sorteados, pero nos falta hacer merge() con cada uno para finalizar el algoritmo
     while len(sorted_sublists) > 1: # Mientras haya mas de 1 chunk, significa que todavia no hemos terminado de merge todos los chunks
-        # Hacemos un merge de cada chunk vecino, de tal forma que siempre dejaremos el ultimo chunk sin tocar para poder realizar el ultimo
-        # merge de ese chunk con el chunk de todos los merge anteriores
+        # Hacemos un merge de cada chunk vecino, de tal forma que si tenemos un numero de chunks impar deajmos el ultimo chunk sin tocar para poder 
+        # realizar el ultimo merge de ese chunk con el chunk de todos los merge anteriores, si el numero es par entonces realiza un 
+        # merge de todos los chunks vecinos(de tupla en tupla) hasta que solo quede 1
         chk_lst = [(sorted_sublists[i], sorted_sublists[i+1]) for i in range(0, len(sorted_sublists)-1, 2)] 
         sorted_sublists = pool.map(mergeWrap, chk_lst) # Paralelizamos tambien la operacion mergeWrap(), mirar comentario de la funcion
     
